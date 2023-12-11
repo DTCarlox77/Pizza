@@ -1,5 +1,4 @@
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,9 +13,7 @@ SECRET_KEY = 'django-insecure-c7wp&=o#_)-s&4%)!p07r!#+5y&u2^ee%zy%zk3h76^yd#y=0a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["https://pizza-4zpi.onrender.com"]
-PORT = int(os.environ.get("PORT", 8000))
-
+ALLOWED_HOSTS = []
 
 # Application definition
 
