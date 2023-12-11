@@ -44,6 +44,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://pizza-4zpi.onrender.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = ['pizza-4zpi.onrender.com']
+
 ROOT_URLCONF = 'project3.urls'
 
 TEMPLATES = [
