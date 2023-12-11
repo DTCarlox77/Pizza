@@ -496,7 +496,7 @@ nav {
 
     input {
         background-color: white;
-        padding-left: 1%;
+        padding-left: 2%;
         border: none;
         min-width: 340px;
         font-family: 'Open_Sans';
@@ -506,7 +506,6 @@ nav {
         margin-right: 5%;
 
         @media (max-width: 900px) {
-            padding-left: 0%;
             margin-left: 0%;
             margin-right: 0%;
             min-width: 220px;
