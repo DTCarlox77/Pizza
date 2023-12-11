@@ -19,24 +19,22 @@
         <div class="options">
             <ul>
                 {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
                     <li><a href="/orders">Pedidos</a></li>
                     <li><a href="/admin/">Panel de control</a></li>
-                    <li><a href="/products">Productos</a></li>
                     <li><a href="/log_out">Cerrar sesión</a></li>
                     <li><a href="/">Sobre Pizza</a></li>
                 {% else %}
                     {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
                         <li><a href="/log_out">Cerrar sesión</a></li>
-                        <li><a href="/orders">Mis pedidos</a></li>
                     {% else %}
                         <li><a href="/login">Iniciar sesión</a></li>
                         <li><a href="/sign_up">Registrarse</a></li>
                     {% endif %}
+                    <li><a href="/products">Productos</a></li>
                     <li><a href="/cart">Carrito</a></li>
                     <li><a href="/">Sobre Pizza</a></li>
-                    {% if user.is_staff %}
-                    <li><a href="/admin/">Panel de control</a></li>
-                    {% endif %}
                 {% endif %}
             </ul>
         </div>
@@ -61,24 +59,22 @@
         <div class="options">
             <ul>
                 {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
                     <li><a href="/orders">Pedidos</a></li>
                     <li><a href="/admin/">Panel de control</a></li>
-                    <li><a href="/products">Productos</a></li>
                     <li><a href="/log_out">Cerrar sesión</a></li>
                     <li><a href="/">Sobre Pizza</a></li>
                 {% else %}
                     {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
                         <li><a href="/log_out">Cerrar sesión</a></li>
-                        <li><a href="/orders">Mis pedidos</a></li>
                     {% else %}
                         <li><a href="/login">Iniciar sesión</a></li>
                         <li><a href="/sign_up">Registrarse</a></li>
                     {% endif %}
+                    <li><a href="/products">Productos</a></li>
                     <li><a href="/cart">Carrito</a></li>
                     <li><a href="/">Sobre Pizza</a></li>
-                    {% if user.is_staff %}
-                    <li><a href="/admin/">Panel de control</a></li>
-                    {% endif %}
                 {% endif %}
             </ul>
         </div>

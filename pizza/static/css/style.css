@@ -191,7 +191,7 @@ nav .options ul a:hover {
 
 .information-menu {
   margin-top: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 8%;
   padding-left: 2%;
   padding-right: 2%;
   display: flex;
@@ -204,6 +204,7 @@ nav .options ul a:hover {
   .information-menu {
     width: 90%;
     padding-left: 5%;
+    margin-bottom: 20%;
     padding-right: 5%;
   }
 }
@@ -347,7 +348,7 @@ nav .options ul a:hover {
   flex-direction: column;
   border-radius: 15px;
   width: 50%;
-  min-width: 450px;
+  min-width: 300px;
   background-image: url("../images/pizzabg.png");
   background-repeat: no-repeat;
   background-size: cover;
