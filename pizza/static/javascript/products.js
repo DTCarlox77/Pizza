@@ -49,6 +49,7 @@ const cancelar_compra = document.querySelector("#cancelar-pizza");
 
 function cerrar_menu() {
     toppigns_menu.style.display = "none";
+    t1.style.display = "none";
     tp1.value = "Ninguna";
     t2.style.display = "none";
     tp2.style.display = "none";
@@ -60,7 +61,196 @@ function cerrar_menu() {
     tp4.style.display = "none";
     tp4.value = "Ninguna";
 }
-cancelar_compra.addEventListener("click", cerrar_menu);
+
+cancelar_compra.addEventListener("click", () => {
+    cerrar_menu();
+});
+
+order_button.forEach(function(order) {
+    order.addEventListener("click", () => {
+        const tipo_pizza = order.getAttribute("data-pizza-type");
+        const size_pizza = order.getAttribute("data-pizza-size");
+        const toppins = order.getAttribute("data-pizza-toppins");
+        const price = parseFloat(order.getAttribute("data-pizza-price"));
+        const imagen = order.getAttribute("data-pizza-imagen");
+
+        const current_cart = JSON.parse(localStorage.getItem("Cart")) || [];
+        
+        if (toppins === "Pizza sencilla") {
+            current_cart.push({
+                "index": index,
+                "Tipo": tipo_pizza,
+                "Toppins": toppins,
+                "Size": size_pizza,
+                "Price": price,
+                "Imagen": imagen
+            });
+
+            carrito();
+            index++;
+            localStorage.setItem("index", index);
+            localStorage.setItem("Cart", JSON.stringify(current_cart));
+
+        } else if (toppins === "Pizza con cobertura"){
+
+            toppigns_menu.style.display = "flex";
+            t1.style.display = "flex";
+            tp1.style.display = "flex";
+
+            comprar_pizza.addEventListener("click", () => {
+                const toppin1 = tp1.value;
+
+                if (toppin1 === "Ninguna") {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Le faltan coberturas por seleccionar.`,
+                        confirmButtonColor: "#3085d6",
+                    });
+                } else {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": tipo_pizza,
+                        "Toppins": toppins,
+                        "Size": size_pizza,
+                        "Price": price,
+                        "Toppin1": toppin1,
+                        "Imagen": imagen
+                    });
+                    
+                    carrito();
+                    cerrar_menu();
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                }
+            });
+
+        } else if (toppins === "Pizza con doble cobertura"){
+
+            toppigns_menu.style.display = "flex";
+            t2.style.display = "flex";
+            tp2.style.display = "flex";
+
+            comprar_pizza.addEventListener("click", () => {
+                const toppin1 = tp1.value;
+                const toppin2 = tp2.value;
+
+                if (toppin1 === "Ninguna" || toppin2 === "Ninguna") {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Le faltan coberturas por seleccionar.`,
+                        confirmButtonColor: "#3085d6",
+                    });
+                } else {
+
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": tipo_pizza,
+                        "Toppins": toppins,
+                        "Size": size_pizza,
+                        "Price": price,
+                        "Toppin1": toppin1,
+                        "Toppin2": toppin2,
+                        "Imagen": imagen
+                    });
+
+                    carrito();
+                    cerrar_menu();
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                }
+            });
+
+        } else if (toppins === "Pizza con triple cobertura"){
+
+            toppigns_menu.style.display = "flex";
+            t2.style.display = "flex";
+            tp2.style.display = "flex";
+            t3.style.display = "flex";
+            tp3.style.display = "flex";
+
+            comprar_pizza.addEventListener("click", () => {
+                const toppin1 = tp1.value;
+                const toppin2 = tp2.value;
+                const toppin3 = tp3.value;
+
+                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna") {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Le faltan coberturas por seleccionar.`,
+                        confirmButtonColor: "#3085d6",
+                    });
+                } else {
+
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": tipo_pizza,
+                        "Toppins": toppins,
+                        "Size": size_pizza,
+                        "Price": price,
+                        "Toppin1": toppin1,
+                        "Toppin2": toppin2,
+                        "Toppin3": toppin3,
+                        "Imagen": imagen
+                    });
+
+                    carrito();
+                    cerrar_menu();
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                }
+            });
+            
+        } else if (toppins === "Pizza especial"){
+
+            toppigns_menu.style.display = "flex";
+            t2.style.display = "flex";
+            tp2.style.display = "flex";
+            t3.style.display = "flex";
+            tp3.style.display = "flex";
+            t4.style.display = "flex";
+            tp4.style.display = "flex";
+
+            comprar_pizza.addEventListener("click", () => {
+                const toppin1 = tp1.value;
+                const toppin2 = tp2.value;
+                const toppin3 = tp3.value;
+                const toppin4 = tp4.value;
+
+                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna" || toppin4 === "Ninguna") {
+                    Swal.fire({
+                        icon: "error",
+                        title: `Le faltan coberturas por seleccionar.`,
+                        confirmButtonColor: "#3085d6",
+                    });
+                } else {
+
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": tipo_pizza,
+                        "Toppins": toppins,
+                        "Size": size_pizza,
+                        "Price": price,
+                        "Toppin1": toppin1,
+                        "Toppin2": toppin2,
+                        "Toppin3": toppin3,
+                        "Toppin4": toppin4,
+                        "Imagen": imagen
+                    });
+
+                    carrito();
+                    cerrar_menu();
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                }
+
+            });
+        }
+    });
+});
 
 const another_order = document.querySelectorAll(".order-ant");
 
@@ -141,171 +331,6 @@ another_order.forEach(function(order) {
             localStorage.setItem("index", index);
             localStorage.setItem("Cart", JSON.stringify(current_cart));
             carrito();
-        }
-    });
-});
-
-order_button.forEach(function(order) {
-    order.addEventListener("click", () => {
-        const tipo_pizza = order.getAttribute("data-pizza-type");
-        const size_pizza = order.getAttribute("data-pizza-size");
-        const toppins = order.getAttribute("data-pizza-toppins");
-        const price = parseFloat(order.getAttribute("data-pizza-price"));
-        const imagen = order.getAttribute("data-pizza-imagen");
-
-        const current_cart = JSON.parse(localStorage.getItem("Cart")) || [];
-        
-        if (toppins === "Pizza sencilla") {
-            current_cart.push({
-                "index": index,
-                "Tipo": tipo_pizza,
-                "Toppins": toppins,
-                "Size": size_pizza,
-                "Price": price,
-                "Imagen": imagen
-            });
-
-            index++;
-            localStorage.setItem("index", index);
-            localStorage.setItem("Cart", JSON.stringify(current_cart));
-            carrito();
-
-        } else if (toppins === "Pizza con cobertura"){
-
-            toppigns_menu.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                let toppin1 = tp1.value;
-
-                current_cart.push({
-                    "index": index,
-                    "Tipo": tipo_pizza,
-                    "Toppins": toppins,
-                    "Size": size_pizza,
-                    "Price": price,
-                    "Toppin1": toppin1,
-                    "Imagen": imagen
-                });
-
-                if (toppin1 === "Ninguna") {
-                    alert("Le faltan coberturas por seleccionar.");
-                } else {
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                    carrito();
-                    cerrar_menu();
-                }
-            });
-
-        } else if (toppins === "Pizza con doble cobertura"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                let toppin1 = tp1.value;
-                let toppin2 = tp2.value;
-
-                current_cart.push({
-                    "index": index,
-                    "Tipo": tipo_pizza,
-                    "Toppins": toppins,
-                    "Size": size_pizza,
-                    "Price": price,
-                    "Toppin1": toppin1,
-                    "Toppin2": toppin2,
-                    "Imagen": imagen
-                });
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna") {
-                    alert("Le faltan coberturas por seleccionar.");
-                } else {
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                    carrito();
-                    cerrar_menu();
-                }
-            });
-
-        } else if (toppins === "Pizza con triple cobertura"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-            t3.style.display = "flex";
-            tp3.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                let toppin1 = tp1.value;
-                let toppin2 = tp2.value;
-                let toppin3 = tp3.value;
-
-                current_cart.push({
-                    "index": index,
-                    "Tipo": tipo_pizza,
-                    "Toppins": toppins,
-                    "Size": size_pizza,
-                    "Price": price,
-                    "Toppin1": toppin1,
-                    "Toppin2": toppin2,
-                    "Toppin3": toppin3,
-                    "Imagen": imagen
-                });
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna") {
-                    alert("Le faltan coberturas por seleccionar.");
-                } else {
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                    carrito();
-                    cerrar_menu();
-                }
-            });
-            
-        } else if (toppins === "Pizza especial"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-            t3.style.display = "flex";
-            tp3.style.display = "flex";
-            t4.style.display = "flex";
-            tp4.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                let toppin1 = tp1.value;
-                let toppin2 = tp2.value;
-                let toppin3 = tp3.value;
-                let toppin4 = tp4.value;
-
-                current_cart.push({
-                    "index": index,
-                    "Tipo": tipo_pizza,
-                    "Toppins": toppins,
-                    "Size": size_pizza,
-                    "Price": price,
-                    "Toppin1": toppin1,
-                    "Toppin2": toppin2,
-                    "Toppin3": toppin3,
-                    "Toppin4": toppin4,
-                    "Imagen": imagen
-                });
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna" || toppin4 === "Ninguna") {
-                    alert("Le faltan coberturas por seleccionar.");
-                } else {
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                    carrito();
-                    cerrar_menu();
-                }
-
-            });
         }
     });
 });
