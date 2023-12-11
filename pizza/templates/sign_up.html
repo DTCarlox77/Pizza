@@ -88,6 +88,7 @@
                 <h1>Registrarse</h1>
             </div>
             <form action="{% url 'sign_up' %}" method="POST">
+                {% csrf_token %}
                 
                 <div class="form-field">
                     <h2>Nombre de usuario:</h2>

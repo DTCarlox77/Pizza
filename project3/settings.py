@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-c7wp&=o#_)-s&4%)!p07r!#+5y&u2^ee%zy%zk3h76^yd#y=0a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pizza-4zpi.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['pizza-4zpi.onrender.com']
 
 # Application definition
 
@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pizza'
+    'pizza',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -35,6 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'project3.urls'

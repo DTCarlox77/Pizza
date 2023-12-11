@@ -88,7 +88,7 @@
                 <h1>Iniciar sesión</h1>
             </div>
             <form action="{% url 'user_login' %}" method="POST">
-
+                {% csrf_token %}
                 <div class="form-field">
                     <h2>Nombre de usuario:</h2>
                     <input type="text" name="username" required>
