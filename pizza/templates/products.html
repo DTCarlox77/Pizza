@@ -1,0 +1,353 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de productos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'icons/pizzalogo.svg' %}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="margin-bottom: 5%;">
+
+    {% if toppings %}
+        <div class="buy-pizza" id="toppings-select" style="display: none">
+            <div class="order-menu">
+                <span class="options">
+                    <h1>Selección de coberturas</h1>
+                </span>
+
+                <label for="toppins" id="t1">Ingresa la primer cobertura</label>
+                <select name="" id="toppin1">
+                    <option value="Ninguna">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t2" style="display: none;">Ingresa la segunda cobertura</label>
+                <select name="" id="toppin2" style="display: none;">
+                    <option value="Ninguna">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t3" style="display: none;">Ingresa la tercera cobertura</label>
+                <select name="" id="toppin3" style="display: none;">
+                    <option value="Ninguna">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t4" style="display: none;">Ingresa la cuarta cobertura</label>
+                <select name="" id="toppin4" style="display: none;">
+                    <option value="Ninguna">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <span class="buy-options">
+                    <button class="agregar-carrito" id="comprar-pizza">Agregar al carrito</button>
+                    <button class="cancelar-compra" id="cancelar-pizza">Cancelar</button>
+                </span>
+            </div>
+        </div>
+    {% endif %}
+
+    <nav class="full-screen">
+
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </nav>
+
+    {% if not user.is_staff %}
+    <div class="carrito" id="carrito-de-compras">
+        <span>
+            <img src="{% static 'icons/cart.svg' %}" alt="">
+        </span>
+        <span class="information">
+            <h1>Carrito</h1>
+            <h3 id="total-pagar">$ 0.00</h3>
+        </span>
+    </div>
+    {% endif %}
+
+    <nav class="small-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="icon-bar">
+            <button id="open_button"><img src="{% static 'icons/open.svg' %}" alt=""></button>
+        </div>
+    </nav>
+
+    <div class="hidden-menu" id="hidden">
+        <div class="icon-bar">
+            <button id="close_button"><img src="{% static 'icons/exit.svg' %}" alt=""></button>
+        </div>
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <section class="image">
+        <img src="{% static 'images/pizza.png' %}" alt="">
+    </section>
+
+    {% if pizzas %}
+        <section class="information-menu">
+            <h1>Pizzas regulares</h1>
+            <p>Descubre la frescura en cada bocado con nuestras ensaladas. Utilizamos ingredientes de la más alta calidad para crear combinaciones equilibradas y deliciosas. Desde opciones clásicas hasta ensaladas más creativas, cada plato es una explosión de sabores frescos y saludables.</p>
+        </section>
+    {% endif %}
+
+    <section class="food_menu">
+    {% for pizza in pizzas %}
+        {% if pizza.pizza_type == "Regular" %}
+            <div class="food">
+                <span class="image">
+                    <img src="{{ pizza.image_url }}" alt="">
+                </span>
+                <span class="information">
+                    <span class="title">
+                        <h2>{{ pizza.pizza_toppins }}</h2>
+                        <h3>{{ pizza.pizza_size }}</h3>
+                        <p>{{ pizza.description }}</p>
+                    </span>
+                    {% if not user.is_staff %}
+                    <span class="button">
+                        <button class="order-btn" data-pizza-imagen="{{ pizza.image_url }}" data-pizza-price="{{ pizza.price }}" data-pizza-id="{{ pizza.id }}" data-pizza-type="{{ pizza.pizza_type }}" data-pizza-toppins="{{ pizza.pizza_toppins }}" data-pizza-size="{{ pizza.pizza_size }}">Adquirir $ {{ pizza.price }}</button>
+                    </span>
+                    {% else %}
+                    <span class="button">
+                        <button>$ {{ pizza.price }}</button>
+                    </span>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if pizzas %}
+        <section class="information-menu">
+            <h1>Pizzas silicianas</h1>
+            <p>Sumérgete en la auténtica tradición siciliana con nuestras deliciosas pizzas sicilianas. La masa esponjosa y ligeramente gruesa sirve como lienzo para una variedad de ingredientes frescos y sabrosas coberturas. Desde clásicas opciones con tomate y queso hasta combinaciones más audaces, cada bocado es una explosión de auténticos sabores mediterráneos.</p>
+        </section>
+    {% endif %}
+
+    <section class="food_menu">
+    {% for pizza in pizzas %}
+        {% if pizza.pizza_type == "Siliciana" %}
+            <div class="food">
+                <span class="image">
+                    <img src="{{ pizza.image_url }}" alt="">
+                </span>
+                <span class="information">
+                    <span class="title">
+                        <h2>{{ pizza.pizza_toppins }}</h2>
+                        <h3>{{ pizza.pizza_size }}</h3>
+                        <p>{{ pizza.description }}</p>
+                    </span>
+                    {% if not user.is_staff %}
+                    <span class="button">
+                        <button class="order-btn" data-pizza-imagen="{{ pizza.image_url }}" data-pizza-price="{{ pizza.price }}" data-pizza-id="{{ pizza.id }}" data-pizza-type="{{ pizza.pizza_type }}" data-pizza-toppins="{{ pizza.pizza_toppins }}" data-pizza-size="{{ pizza.pizza_size }}">Adquirir $ {{ pizza.price }}</button>
+                    </span>
+                    {% else %}
+                    <span class="button">
+                        <button>$ {{ pizza.price }}</button>
+                    </span>
+                    {% endif %}
+                </span>
+            </div>
+        {% endif %}
+    {% endfor %}
+    </section>
+
+    {% if subs %}
+        <section class="information-menu">
+            <h1>Agregados</h1>
+            <p>En Pizza, creemos que la verdadera grandeza radica en los detalles más pequeños. Por eso, hemos creado subplatillos extra que llevan la experiencia gastronómica a nuevas alturas. Desde toques adicionales de sabor hasta pequeñas exquisiteces que despiertan el paladar, estos detalles hacen que cada visita sea única.</p>
+        </section>
+    {% endif %}
+
+    <section class="food_menu">
+        {% for sub in subs %}
+            <div class="food">
+                <span class="image">
+                    <img src="{{ sub.image_url }}" alt="">
+                </span>
+                <span class="information">
+                    <span class="title">
+                        <h2>{{ sub.name }}</h2>
+                        <h3>{{ sub.size }}</h3>
+                        <p>{{ sub.description }}</p>
+                    </span>
+                    {% if not user.is_staff %}
+                    <span class="button">
+                        <button class="order-ant" data-sub-imagen="{{ sub.image_url }}" data-tipo="sub" data-sub-size="{{ sub.size }}" data-sub-id="{{ sub.id }}" data-sub-name="{{ sub.name }}" data-sub-price="{{ sub.price }}">Adquirir $ {{ sub.price }}</button>
+                    </span>
+                    {% else %}
+                    <span class="button">
+                        <button>$ {{ sub.price }}</button>
+                    </span>
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    </section>
+
+    {% if pastas %}
+        <section class="information-menu">
+            <h1>Pastas</h1>
+            <p>Embárcate en un viaje culinario a Italia con nuestras deliciosas pastas. Cocidas al dente y acompañadas de salsas artesanales, nuestras opciones de pasta van desde las tradicionales como la ziti al horno con mozarella hasta variedades más innovadoras. Cada platillo es una expresión de la autenticidad y el amor por la cocina italiana.</p>
+        </section>
+    {% endif %}
+
+    <section class="food_menu">
+        {% for pasta in pastas %}
+            <div class="food">
+                <span class="image">
+                    <img src="{{ pasta.image_url }}" alt="">
+                </span>
+                <span class="information">
+                    <span class="title">
+                        <h2>{{ pasta.name }}</h2>
+                        <p>{{ pasta.description }}</p>
+                    </span>
+                    {% if not user.is_staff %}
+                    <span class="button">
+                        <button class="order-ant" data-tipo="pasta" data-pasta-imagen="{{ pasta.image_url }}" data-pasta-id="{{ pasta.id }}" data-pasta-name="{{ pasta.name }}" data-pasta-price="{{ pasta.price }}">Adquirir $ {{ pasta.price }}</button>
+                    </span>
+                    {% else %}
+                    <span class="button">
+                        <button>$ {{ pasta.price }}</button>
+                    </span>
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+    </section>
+
+    {% if ensaladas %}
+    <section class="information-menu">
+        <h1>Ensaladas</h1>
+        <p>Descubre la frescura en cada bocado con nuestras ensaladas. Utilizamos ingredientes de la más alta calidad para crear combinaciones equilibradas y deliciosas. Desde opciones clásicas hasta ensaladas más creativas, cada plato es una explosión de sabores frescos y saludables.</p>
+    </section>
+    {% endif %}
+
+    <section class="food_menu">
+
+        {% for ensalada in ensaladas %}
+            <div class="food">
+                <span class="image">
+                    <img src="{{ ensalada.image_url }}" alt="">
+                </span>
+                <span class="information">
+                    <span class="title">
+                        <h2>{{ ensalada.name }}</h2>
+                        <p>{{ ensalada.description }}</p>
+                    </span>
+                    {% if not user.is_staff %}
+                    <span class="button">
+                        <button class="order-ant" data-ensalada-imagen="{{ ensalada.image_url }}" data-tipo="ensalada" data-ensalada-id="{{ ensalada.id }}" data-ensalada-name="{{ ensalada.name }}" data-ensalada-price="{{ ensalada.price }}">Adquirir $ {{ ensalada.price }}</button>
+                    </span>
+                    {% else %}
+                    <span class="button">
+                        <button>$ {{ ensalada.price }}</button>
+                    </span>
+                    {% endif %}
+                </span>
+            </div>
+        {% endfor %}
+
+    </section>
+
+    {% if cenas %}
+        <section class="information-menu">
+            <h1>Platillos para la cena</h1>
+            <p>Nuestros platos principales son una oda a la diversidad y la calidad. Desde ensaladas frescas y saludables, perfectas como entradas o platos ligeros, hasta opciones más sustanciosas como filetes y pollo, cada platillo es cuidadosamente preparado para ofrecer una experiencia gastronómica completa y satisfactoria.</p>
+        </section>
+    {% endif %}
+
+    <section class="food_menu">
+    {% for cena in cenas %}
+        <div class="food">
+            <span class="image">
+                <img src="{{ cena.image_url }}" alt="">
+            </span>
+            <span class="information">
+                <span class="title">
+                    <h2>{{ cena.name }}</h2>
+                    <h3>{{ cena.size }}</h3>
+                    <p>{{ cena.description }}</p>
+                </span>
+                {% if not user.is_staff %}
+                <span class="button">
+                    <button class="order-ant" data-cena-imagen="{{ cena.image_url }}" data-tipo="cena" data-cena-id="{{ cena.id }}" data-cena-name="{{ cena.name }}" data-cena-size="{{ cena.size }}" data-cena-price="{{ cena.price }}">Adquirir $ {{ cena.price }}</button>
+                </span>
+                {% else %}
+                <span class="button">
+                    <button>$ {{ cena.price }}</button>
+                </span>
+                {% endif %}
+            </span>
+        </div>
+    {% endfor %}
+    </section>
+
+<script src="{% static 'javascript/script.js' %}"></script>
+<script src="{% static 'javascript/products.js' %}"></script>
+
+</body>
+</html>

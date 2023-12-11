@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'icons/cartlogo.svg' %}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="margin-bottom: 5%;">
+
+    <nav class="full-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="small-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="icon-bar">
+            <button id="open_button"><img src="{% static 'icons/open.svg' %}" alt=""></button>
+        </div>
+    </nav>
+
+    <div class="hidden-menu" id="hidden">
+        <div class="icon-bar">
+            <button id="close_button"><img src="{% static 'icons/exit.svg' %}" alt=""></button>
+        </div>
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <section class="image">
+        <img src="{% static 'images/cart.png' %}" alt="">
+    </section>
+
+    <section class="information-menu">
+        <h1>Carrito de compras</h1>
+        <p>Acá aparecerán todos los productos que selecciones para comprar, confirma tu pedido presionando el botón de "Realizar pedido". En caso de no querer un producto previamente seleccionado, da click en "Eliminar". Inicia sesión o regístrate para poder llevar a cabo tus pedidos.</p>
+    </section>
+    
+    {% if user.is_authenticated %}
+    <div class="order-button-django">
+        <button id="django_order">Realizar pedido</button>
+    </div>
+    {% endif %}
+
+    <section class="food_menu" id="carrito-container">
+    </section>
+
+    <div class="carrito" id="carrito-de-compras">
+        <span>
+            <img src="{% static 'icons/cart.svg' %}" alt="">
+        </span>
+        <span class="information">
+            <h1>Carrito</h1>
+            <h3 id="total-pagar">$ 0.00</h3>
+        </span>
+    </div>
+
+<script src="{% static 'javascript/script.js' %}"></script>
+<script src="{% static 'javascript/cart.js' %}"></script>
+
+</body>
+</html>

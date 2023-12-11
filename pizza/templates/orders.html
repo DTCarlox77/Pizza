@@ -1,0 +1,187 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedidos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'icons/orderlogo.svg' %}" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="margin-bottom: 5%;">
+
+    <nav class="full-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                        <li><a href="/orders">Mis pedidos</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                    {% if user.is_staff %}
+                    <li><a href="/admin/">Panel de control</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="small-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="icon-bar">
+            <button id="open_button"><img src="{% static 'icons/open.svg' %}" alt=""></button>
+        </div>
+    </nav>
+
+    <div class="hidden-menu" id="hidden">
+        <div class="icon-bar">
+            <button id="close_button"><img src="{% static 'icons/exit.svg' %}" alt=""></button>
+        </div>
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                        <li><a href="/orders">Mis pedidos</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                    {% if user.is_staff %}
+                    <li><a href="/admin/">Panel de control</a></li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    {% if not user.is_staff %}
+    <div class="carrito" id="carrito-de-compras">
+        <span>
+            <img src="{% static 'icons/cart.svg' %}" alt="">
+        </span>
+        <span class="information">
+            <h1>Carrito</h1>
+            <h3 id="total-pagar">$ 0.00</h3>
+        </span>
+    </div>
+    {% endif %}
+
+    <section class="image">
+        <img src="{% static 'images/pedido.png' %}" alt="">
+    </section>
+
+    {% if user.is_staff %}
+
+        <section class="information-menu">
+            <h1>Pedidos de usuarios</h1>
+            <p>Acá aparecerán todos los pedidos que los usuarios hayan solicitado, podrás marcar las órdenes como completas.</p>
+        </section>
+
+        {% if orders %}
+            {% for order in orders %}
+                <section class="information-menu">
+                    <h2>Pedido de: {{ order.user }}</h2>
+                    <h3>{{ order.date }} $ {{ order.price }}</h3>
+                    <ul>
+                        {% for product in order.products %}
+                            <li>
+                                Pedido{{ loop.index }}: 
+                                {{ product.Tipo }} {{ product.Toppins | default_if_none:'Sin coberturas' }} |
+                                {{ product.Size | default_if_none:'' }}
+                                {% if product.Toppin1 is not none %}| {{ product.Toppin1 }}{% endif %}
+                                {% if product.Toppin2 is not none %}, {{ product.Toppin2 }}{% endif %}
+                                {% if product.Toppin3 is not none %}, {{ product.Toppin3 }}{% endif %}
+                                {% if product.Toppin4 is not none %}, {{ product.Toppin4 }}{% endif %}
+                                | Precio: ${{ product.Price }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+                {% if order.status == "pendiente"%}
+                    <button class="complete-order" data-order-id="{{ order.id }}">Completar orden</button>
+                {% else %}
+                <section class="information-menu">
+                    <h3>Orden completada</h3>
+                </section>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <section class="information-menu">
+                <h1>No se han encontrado pedidos.</h1>
+            </section>
+        {% endif %}
+
+    {% else %}
+
+        <section class="information-menu">
+            <h1>Historial de pedidos</h1>
+            <p>Acá aparecerán todos los pedidos que se hayan solicitado, a su vez, se muestra el estado actual de la orden.</p>
+        </section>
+
+        {% if orders %}
+            {% for order in orders %}
+            {% if order.user == user.username %}
+                <section class="information-menu">
+                    <h2>{{ order.date }} $ {{ order.price }} | Estado {{ order.status }}</h2>
+                    <ul>
+                        {% for product in order.products %}
+                            <li>
+                                Pedido{{ loop.index }}: 
+                                {{ product.Tipo }} {{ product.Toppins|default_if_none:'Sin coberturas' }}
+                                {{ product.Size|default_if_none:'' }} 
+                                | Precio: ${{ product.Price }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </section>
+            {% else %}
+                <section class="information-menu">
+                    <h1>No cuentas con pedidos.</h1>
+                </section>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <section class="information-menu">
+                <h1>No cuentas con pedidos.</h1>
+            </section>
+        {% endif %}
+
+    {% endif %}
+
+
+<script src="{% static 'javascript/script.js' %}"></script>
+<script src="{% static 'javascript/order.js' %}"></script>
+<script src="{% static 'javascript/cart.js' %}"></script>
+
+</body>
+</html>

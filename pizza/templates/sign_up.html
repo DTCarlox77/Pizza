@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'icons/userlogo.svg' %}" type="image/x-icon">
+</head>
+<body>
+
+    <nav class="full-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="small-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="icon-bar">
+            <button id="open_button"><img src="{% static 'icons/open.svg' %}" alt=""></button>
+        </div>
+    </nav>
+
+    <div class="hidden-menu" id="hidden">
+        <div class="icon-bar">
+            <button id="close_button"><img src="{% static 'icons/exit.svg' %}" alt=""></button>
+        </div>
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="login-menu">
+        <div class="login-image">
+            <img src="https://media.revistagq.com/photos/5d8b3cd2261a8f0008786844/16:9/w_4992,h_2808,c_limit/como%20hacer%20la%20mejor%20pizza%20del%20mundo.jpg" alt="">
+        </div>
+        <div class="form">
+            <div class="tittle">
+                <h1>Registrarse</h1>
+            </div>
+            <form action="{% url 'sign_up' %}" method="POST">
+                {% csrf_token %}
+                
+                <div class="form-field">
+                    <h2>Nombre de usuario:</h2>
+                    <input type="text" name="username" required>
+                    {% if form.errors.username %}
+                        <p class="error">{{ form.errors.username.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="form-field">
+                    <h2>Nombre:</h2>
+                    <input type="text" name="first_name" required>
+                    {% if form.errors.first_name %}
+                        <p class="error">{{ form.errors.first_name.0 }}</p>
+                    {% endif %}
+                </div>
+            
+                <div class="form-field">
+                    <h2>Apellido:</h2>
+                    <input type="text" name="last_name" required>
+                    {% if form.errors.last_name %}
+                        <p class="error">{{ form.errors.last_name.0 }}</p>
+                    {% endif %}
+                </div>
+            
+                <div class="form-field">
+                    <h2>Correo:</h2>
+                    <input type="email" name="email" required>
+                    {% if form.errors.email %}
+                        <p class="error">{{ form.errors.email.0 }}</p>
+                    {% endif %}
+                </div>
+            
+                <div class="form-field">
+                    <h2>Contraseña:</h2>
+                    <input type="password" name="password" required>
+                </div>
+                
+                <button type="submit">Registrarse</button>
+            </form>
+            
+            
+        </div>
+    </div>
+    <script src="{% static 'javascript/script.js' %}"></script>
+
+</body>
+</html>

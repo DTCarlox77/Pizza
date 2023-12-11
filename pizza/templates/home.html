@@ -1,0 +1,107 @@
+{% load static %}
+{% comment %} Adrian, admin {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza</title>
+    <link rel="icon" href="{% static 'icons/pizzalogo.svg' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <nav class="full-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="small-screen">
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="icon-bar">
+            <button id="open_button"><img src="{% static 'icons/open.svg' %}" alt=""></button>
+        </div>
+    </nav>
+
+    <div class="hidden-menu" id="hidden">
+        <div class="icon-bar">
+            <button id="close_button"><img src="{% static 'icons/exit.svg' %}" alt=""></button>
+        </div>
+        <div class="icon">
+            <img src="{% static 'icons/pizza.svg' %}" alt="">
+        </div>
+        <div class="options">
+            <ul>
+                {% if user.is_staff %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/orders">Pedidos</a></li>
+                    <li><a href="/admin/">Panel de control</a></li>
+                    <li><a href="/log_out">Cerrar sesión</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% else %}
+                    {% if user.is_authenticated %}
+                        <li><a href="/orders">Pedidos</a></li>
+                        <li><a href="/log_out">Cerrar sesión</a></li>
+                    {% else %}
+                        <li><a href="/login">Iniciar sesión</a></li>
+                        <li><a href="/sign_up">Registrarse</a></li>
+                    {% endif %}
+                    <li><a href="/products">Productos</a></li>
+                    <li><a href="/cart">Carrito</a></li>
+                    <li><a href="/">Sobre Pizza</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <section class="image">
+        <img src="https://s3.amazonaws.com/orion-eat-app-files/orioneat-prod/Bax3MCyXppZJ6YaSF-1920x1080%20pxls.jpg" alt="">
+    </section>
+
+    <section class="information-menu">
+        {% if user.is_authenticated %}
+            <h1>Te damos la bienvenida {{ user.username }} </h1>
+            <p>Puedes realizar tus pedidos en nuestra sección de productos. Una vez hayas seleccionado lo que necesitas, dirígete a la sección del carrito y confirma tu pedido. Solo será cuestión de tiempo antes de que disfrutes de nuestras exquisitas recetas.</p>
+        {% else %}
+            <h1>Te damos la bienvenida a Pizza</h1>
+            <p>En nuestro establecimiento, te presentamos una amplia variedad de auténticos platillos italianos que van más allá de la simple pizza. Desde exquisitas pastas hasta cenas deliciosamente preparadas, nuestra oferta gastronómica abarca las tradiciones culinarias de Italia. Queremos que te sientas libre de explorar y disfrutar de nuestra selección de productos. La elección es tuya; siéntete cómodo tomando tu tiempo para descubrir las delicias que ofrecemos y elige aquello que más satisfaga tus antojos. En Pizza, la experiencia culinaria es tan diversa como tus gustos. ¡Explora, elige y deléitate con la auténtica cocina italiana que tenemos para ti!</p>
+        {% endif %}
+    </section>
+
+    <section class="image">
+        <img src="https://images4.alphacoders.com/913/913661.jpg" alt="">
+    </section>
+
+    <section class="information-menu">
+        <h1>CS50W Project 3 - Pizza</h1>
+        <p>Desarrollado por Carlos Adrián Espinosa Luna - Grupo K, Pizza es una aplicación web diseñada para facilitar la gestión de pedidos en pizzerías. Los usuarios tienen la posibilidad de registrarse, lo que les permite realizar una variedad de pedidos que serán atendidos por los administradores de la plataforma. En Pizza, se ofrecen diversas opciones, brindándote la flexibilidad de personalizar tus pizzas al agregar toppings según tus preferencias.</p>
+    </section>
+    <script src="{% static 'javascript/script.js' %}"></script>
+</body>
+</html>
