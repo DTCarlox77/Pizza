@@ -153,9 +153,12 @@
                         {% for product in order.products %}
                             <li>
                                 Pedido{{ loop.index }}: 
-                                {{ product.Tipo }} {{ product.Toppins|default_if_none:'Sin coberturas' }}
-                                {{ product.Size|default_if_none:'' }} 
-                                | Precio: ${{ product.Price }}
+                                {{ product.Tipo }} {{ product.Toppins | default_if_none:'Sin coberturas' }} |
+                                {{ product.Size | default_if_none:'' }}
+                                {% if product.Toppin1 is not none %}| Coberturas: {{ product.Toppin1 }}{% endif %}
+                                {% if product.Toppin2 is not none %}, {{ product.Toppin2 }}{% endif %}
+                                {% if product.Toppin3 is not none %}, {{ product.Toppin3 }}{% endif %}
+                                {% if product.Toppin4 is not none %}, {{ product.Toppin4 }}{% endif %}
                             </li>
                         {% endfor %}
                     </ul>
@@ -174,6 +177,8 @@
 
     {% endif %}
 
+    <section class="food_menu" style="display: none;" id="carrito-container">
+    </section>
 
 <script src="{% static 'javascript/script.js' %}"></script>
 <script src="{% static 'javascript/order.js' %}"></script>

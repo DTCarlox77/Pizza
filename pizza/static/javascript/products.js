@@ -106,6 +106,7 @@ order_button.forEach(function(order) {
                         title: `Le faltan coberturas por seleccionar.`,
                         confirmButtonColor: "#3085d6",
                     });
+                    carrito();
                 } else {
                     current_cart.push({
                         "index": index,
@@ -141,6 +142,7 @@ order_button.forEach(function(order) {
                         title: `Le faltan coberturas por seleccionar.`,
                         confirmButtonColor: "#3085d6",
                     });
+                    carrito();
                 } else {
 
                     current_cart.push({
@@ -181,6 +183,7 @@ order_button.forEach(function(order) {
                         title: `Le faltan coberturas por seleccionar.`,
                         confirmButtonColor: "#3085d6",
                     });
+                    carrito();
                 } else {
 
                     current_cart.push({
@@ -225,6 +228,7 @@ order_button.forEach(function(order) {
                         title: `Le faltan coberturas por seleccionar.`,
                         confirmButtonColor: "#3085d6",
                     });
+                    carrito();
                 } else {
 
                     current_cart.push({
@@ -248,6 +252,8 @@ order_button.forEach(function(order) {
                 }
 
             });
+
+        comprar_pizza.removeEventListener("click");
         }
     });
 });
