@@ -4,8 +4,9 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+app_name = 'pizza'
+
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("", views.home),
     path("products/", views.products),
     path("login/", views.user_login, name="user_login"),
