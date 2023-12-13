@@ -12,7 +12,7 @@ function mostrar_carrito() {
 
         // Función para obtener el texto de las coberturas sin "undefined"
         function obtener_coberturas() {
-            const toppings = [producto.Toppin1, producto.Toppin2, producto.Toppin3, producto.Toppin4];
+            const toppings = [producto.Topping1, producto.Topping2, producto.Topping3, producto.Topping4];
             const coberturas = toppings.filter(topping => topping !== undefined).join(" ");
             return coberturas.length > 0 ? coberturas : null;
         }

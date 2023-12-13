@@ -1,267 +1,251 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-const styles = document.querySelectorAll(".style");
-const sizes = document.querySelectorAll(".size");
+function carrito() {
+    const productos = JSON.parse(localStorage.getItem("Cart")) || [];
+    const saldo = document.querySelector("#total-pagar");
 
-styles.forEach(function (style) {
+    if (productos.length === 0) {
+        saldo.textContent = "$ 0.00";
+        return;
+    }
 
-    style.addEventListener("click", () => {
-        styles.forEach(function(unselected) {
-            unselected.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-            unselected.style.color = "white";
-        });
-    
-        style.style.backgroundColor = "#ff7514";
-        style.style.color = "white";
-    });
-});
-
-sizes.forEach(function (size) {
-
-    size.addEventListener("click", () => {
-        sizes.forEach(function(unselected) {
-            unselected.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-            unselected.style.color = "white";
-        });
-    
-        size.style.backgroundColor = "#ff7514";
-        size.style.color = "white";
-    });
-});
-
-let index = parseInt(localStorage.getItem("index")) || 0;
-const order_button = document.querySelectorAll(".order-btn");
-
-const toppigns_menu = document.querySelector("#toppings-select");
-
-const t1 = document.querySelector("#t1");
-const t2 = document.querySelector("#t2");
-const t3 = document.querySelector("#t3");
-const t4 = document.querySelector("#t4");
-
-const tp1 = document.querySelector("#toppin1");
-const tp2 = document.querySelector("#toppin2");
-const tp3 = document.querySelector("#toppin3");
-const tp4 = document.querySelector("#toppin4");
-
-const comprar_pizza = document.querySelector("#comprar-pizza");
-const cancelar_compra = document.querySelector("#cancelar-pizza");
-
-function cerrar_menu() {
-    toppigns_menu.style.display = "none";
-    t1.style.display = "none";
-    tp1.value = "Ninguna";
-    t2.style.display = "none";
-    tp2.style.display = "none";
-    tp2.value = "Ninguna";
-    t3.style.display = "none";
-    tp3.style.display = "none";
-    tp3.value = "Ninguna";
-    t4.style.display = "none";
-    tp4.style.display = "none";
-    tp4.value = "Ninguna";
+    const total_pago = productos.reduce((total, producto) => total + parseFloat(producto.Price), 0);
+    saldo.textContent = `$ ${total_pago.toFixed(2)}`;
 }
 
-cancelar_compra.addEventListener("click", () => {
-    cerrar_menu();
-});
+const order_button = document.querySelectorAll(".order-btn");
+const toppigns_menu = document.querySelector("#toppings-select");
 
-order_button.forEach(function(order) {
-    order.addEventListener("click", () => {
-        const tipo_pizza = order.getAttribute("data-pizza-type");
-        const size_pizza = order.getAttribute("data-pizza-size");
-        const toppins = order.getAttribute("data-pizza-toppins");
-        const price = parseFloat(order.getAttribute("data-pizza-price"));
-        const imagen = order.getAttribute("data-pizza-imagen");
+order_button.forEach(button => {
 
+    button.addEventListener("click", () => {
+        cerrar_menu();
         const current_cart = JSON.parse(localStorage.getItem("Cart")) || [];
-        
-        if (toppins === "Pizza sencilla") {
+        let index = parseInt(localStorage.getItem("index")) || 0;
+
+        const Tipo = button.getAttribute("data-pizza-type"); // Regular o siliciana.
+        const Toppings = button.getAttribute("data-pizza-toppins"); // Cantidad o tipos de cobertura.
+        const Size = button.getAttribute("data-pizza-size"); // Grande o pequeña.
+        const Price = button.getAttribute("data-pizza-price");
+        const Imagen = button.getAttribute("data-pizza-imagen");
+
+        if (Toppings == "Pizza sencilla") {
             current_cart.push({
                 "index": index,
-                "Tipo": tipo_pizza,
-                "Toppins": toppins,
-                "Size": size_pizza,
-                "Price": price,
-                "Imagen": imagen
+                "Tipo": Tipo,
+                "Toppins": Toppings,
+                "Size": Size,
+                "Price": Price,
+                "Imagen": Imagen
             });
 
-            carrito();
             index++;
             localStorage.setItem("index", index);
             localStorage.setItem("Cart", JSON.stringify(current_cart));
+            carrito();
 
-        } else if (toppins === "Pizza con cobertura"){
+            Swal.fire({
+                icon: "success",
+                title: `Producto agregado al carrito.`,
+                confirmButtonColor: "#3085d6",
+            });
+        }
 
+        else {
             toppigns_menu.style.display = "flex";
-            t1.style.display = "flex";
-            tp1.style.display = "flex";
+            const Topping1 = document.querySelector("#toppin1");
+            const Topping2 = document.querySelector("#toppin2");
+            const Topping3 = document.querySelector("#toppin3");
+            const Topping4 = document.querySelector("#toppin4");
 
-            comprar_pizza.addEventListener("click", () => {
-                const toppin1 = tp1.value;
+            const T2 = document.querySelector("#t2");
+            const T3 = document.querySelector("#t3");
+            const T4 = document.querySelector("#t4");
 
-                if (toppin1 === "Ninguna") {
+            if (Toppings == "Pizza con doble cobertura" || Toppings == "Pizza con triple cobertura" || Toppings == "Pizza especial") {
+                T2.style.display = "flex";
+                Topping2.style.display = "flex";
+            }
+
+            if (Toppings == "Pizza con triple cobertura" || Toppings == "Pizza especial") {
+                T3.style.display = "flex";
+                Topping3.style.display = "flex";
+            }
+
+            if (Toppings == "Pizza especial") {
+                T4.style.display = "flex";
+                Topping4.style.display = "flex";
+            }
+
+            const agregar_carrito = document.querySelector("#comprar-pizza");
+            agregar_carrito.addEventListener("click", () => {
+                if (Toppings == "Pizza sencilla") {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": Tipo,
+                        "Toppins": Toppings,
+                        "Size": Size,
+                        "Price": Price,
+                        "Imagen": Imagen,
+                    });
+
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                    carrito();
+
+                    Swal.fire({
+                        icon: "success",
+                        title: `Producto agregado al carrito.`,
+                        confirmButtonColor: "#3085d6",
+                    }); 
+                } 
+
+                else if (Toppings == "Pizza con cobertura" && Topping1.value) {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": Tipo,
+                        "Toppins": Toppings,
+                        "Size": Size,
+                        "Price": Price,
+                        "Imagen": Imagen,
+                        "Topping1": Topping1.value,
+                    });
+
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                    carrito();
+
+                    Swal.fire({
+                        icon: "success",
+                        title: `Producto agregado al carrito.`,
+                        confirmButtonColor: "#3085d6",
+                    }); 
+                }
+                
+                else if (Toppings == "Pizza con doble cobertura" && Topping1.value && Topping2.value) {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": Tipo,
+                        "Toppins": Toppings,
+                        "Size": Size,
+                        "Price": Price,
+                        "Imagen": Imagen,
+                        "Topping1": Topping1.value,
+                        "Topping2": Topping2.value
+                    });
+
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                    carrito();
+
+                    Swal.fire({
+                        icon: "success",
+                        title: `Producto agregado al carrito.`,
+                        confirmButtonColor: "#3085d6",
+                    }); 
+                }
+
+                else if (Toppings == "Pizza con triple cobertura" && Topping1.value && Topping2.value && Topping3.value) {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": Tipo,
+                        "Toppins": Toppings,
+                        "Size": Size,
+                        "Price": Price,
+                        "Imagen": Imagen,
+                        "Topping1": Topping1.value,
+                        "Topping2": Topping2.value,
+                        "Topping3": Topping3.value
+                    });
+
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                    carrito();
+
+                    Swal.fire({
+                        icon: "success",
+                        title: `Producto agregado al carrito.`,
+                        confirmButtonColor: "#3085d6",
+                    }); 
+                }
+
+                else if (Toppings == "Pizza con triple cobertura" && Topping1.value && Topping2.value && Topping3.value && Topping4.value) {
+                    current_cart.push({
+                        "index": index,
+                        "Tipo": Tipo,
+                        "Toppins": Toppings,
+                        "Size": Size,
+                        "Price": Price,
+                        "Imagen": Imagen,
+                        "Topping1": Topping1.value,
+                        "Topping2": Topping2.value,
+                        "Topping3": Topping3.value,
+                        "Topping4": Topping4.value
+                    });
+
+                    index++;
+                    localStorage.setItem("index", index);
+                    localStorage.setItem("Cart", JSON.stringify(current_cart));
+                    carrito();
+
+                    Swal.fire({
+                        icon: "success",
+                        title: `Producto agregado al carrito.`,
+                        confirmButtonColor: "#3085d6",
+                    }); 
+                }
+                
+                else {
                     Swal.fire({
                         icon: "error",
                         title: `Le faltan coberturas por seleccionar.`,
                         confirmButtonColor: "#3085d6",
                     });
-                    carrito();
-                } else {
-                    current_cart.push({
-                        "index": index,
-                        "Tipo": tipo_pizza,
-                        "Toppins": toppins,
-                        "Size": size_pizza,
-                        "Price": price,
-                        "Toppin1": toppin1,
-                        "Imagen": imagen
-                    });
-                    
-                    carrito();
-                    cerrar_menu();
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
                 }
             });
-
-        } else if (toppins === "Pizza con doble cobertura"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                const toppin1 = tp1.value;
-                const toppin2 = tp2.value;
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna") {
-                    Swal.fire({
-                        icon: "error",
-                        title: `Le faltan coberturas por seleccionar.`,
-                        confirmButtonColor: "#3085d6",
-                    });
-                    carrito();
-                } else {
-
-                    current_cart.push({
-                        "index": index,
-                        "Tipo": tipo_pizza,
-                        "Toppins": toppins,
-                        "Size": size_pizza,
-                        "Price": price,
-                        "Toppin1": toppin1,
-                        "Toppin2": toppin2,
-                        "Imagen": imagen
-                    });
-
-                    carrito();
-                    cerrar_menu();
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                }
-            });
-
-        } else if (toppins === "Pizza con triple cobertura"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-            t3.style.display = "flex";
-            tp3.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                const toppin1 = tp1.value;
-                const toppin2 = tp2.value;
-                const toppin3 = tp3.value;
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna") {
-                    Swal.fire({
-                        icon: "error",
-                        title: `Le faltan coberturas por seleccionar.`,
-                        confirmButtonColor: "#3085d6",
-                    });
-                    carrito();
-                } else {
-
-                    current_cart.push({
-                        "index": index,
-                        "Tipo": tipo_pizza,
-                        "Toppins": toppins,
-                        "Size": size_pizza,
-                        "Price": price,
-                        "Toppin1": toppin1,
-                        "Toppin2": toppin2,
-                        "Toppin3": toppin3,
-                        "Imagen": imagen
-                    });
-
-                    carrito();
-                    cerrar_menu();
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                }
-            });
-            
-        } else if (toppins === "Pizza especial"){
-
-            toppigns_menu.style.display = "flex";
-            t2.style.display = "flex";
-            tp2.style.display = "flex";
-            t3.style.display = "flex";
-            tp3.style.display = "flex";
-            t4.style.display = "flex";
-            tp4.style.display = "flex";
-
-            comprar_pizza.addEventListener("click", () => {
-                const toppin1 = tp1.value;
-                const toppin2 = tp2.value;
-                const toppin3 = tp3.value;
-                const toppin4 = tp4.value;
-
-                if (toppin1 === "Ninguna" || toppin2 === "Ninguna" || toppin3 === "Ninguna" || toppin4 === "Ninguna") {
-                    Swal.fire({
-                        icon: "error",
-                        title: `Le faltan coberturas por seleccionar.`,
-                        confirmButtonColor: "#3085d6",
-                    });
-                    carrito();
-                } else {
-
-                    current_cart.push({
-                        "index": index,
-                        "Tipo": tipo_pizza,
-                        "Toppins": toppins,
-                        "Size": size_pizza,
-                        "Price": price,
-                        "Toppin1": toppin1,
-                        "Toppin2": toppin2,
-                        "Toppin3": toppin3,
-                        "Toppin4": toppin4,
-                        "Imagen": imagen
-                    });
-
-                    carrito();
-                    cerrar_menu();
-                    index++;
-                    localStorage.setItem("index", index);
-                    localStorage.setItem("Cart", JSON.stringify(current_cart));
-                }
-
-            });
-
-        comprar_pizza.removeEventListener("click");
         }
     });
+    cerrar_menu();
+});
+
+const cancelar_orden = document.querySelector("#cancelar-pizza");
+function cerrar_menu() {
+
+    const Topping1 = document.querySelector("#toppin1");
+    const Topping2 = document.querySelector("#toppin2");
+    const Topping3 = document.querySelector("#toppin3");
+    const Topping4 = document.querySelector("#toppin4");
+
+    const T2 = document.querySelector("#t2");
+    const T3 = document.querySelector("#t3");
+    const T4 = document.querySelector("#t4");
+
+    toppigns_menu.style.display = "none";
+    Topping1.value = "";
+
+    T2.style.display = "none";
+    Topping2.style.display = "none";
+    Topping2.value = "";
+    T3.style.display = "none";
+    Topping3.style.display = "none";
+    Topping3.value = "";
+    T4.style.display = "none";
+    Topping4.style.display = "none";
+    Topping4.value = "";
+}
+
+cancelar_orden.addEventListener("click", () => {
+    cerrar_menu();
 });
 
 const another_order = document.querySelectorAll(".order-ant");
-
 another_order.forEach(function(order) {
     order.addEventListener("click", () => {
+        let index = parseInt(localStorage.getItem("index")) || 0;
 
         const name = order.getAttribute("data-tipo");
         const current_cart = JSON.parse(localStorage.getItem("Cart")) || [];
@@ -285,6 +269,12 @@ another_order.forEach(function(order) {
             localStorage.setItem("Cart", JSON.stringify(current_cart));
             carrito();
 
+            Swal.fire({
+                icon: "success",
+                title: `Producto agregado al carrito.`,
+                confirmButtonColor: "#3085d6",
+            });
+
         } else if (name === "pasta") {
             const pasta_name = order.getAttribute("data-pasta-name");
             const pasta_price = order.getAttribute("data-pasta-price");
@@ -301,6 +291,12 @@ another_order.forEach(function(order) {
             localStorage.setItem("index", index);
             localStorage.setItem("Cart", JSON.stringify(current_cart));
             carrito();
+
+            Swal.fire({
+                icon: "success",
+                title: `Producto agregado al carrito.`,
+                confirmButtonColor: "#3085d6",
+            });
             
         } else if (name === "ensalada") {
             const ensalada_name = order.getAttribute("data-ensalada-name");
@@ -318,6 +314,12 @@ another_order.forEach(function(order) {
             localStorage.setItem("index", index);
             localStorage.setItem("Cart", JSON.stringify(current_cart));
             carrito();
+
+            Swal.fire({
+                icon: "success",
+                title: `Producto agregado al carrito.`,
+                confirmButtonColor: "#3085d6",
+            });
 
         } else if (name === "cena") {
             const cena_name = order.getAttribute("data-cena-name");
@@ -337,22 +339,15 @@ another_order.forEach(function(order) {
             localStorage.setItem("index", index);
             localStorage.setItem("Cart", JSON.stringify(current_cart));
             carrito();
+
+            Swal.fire({
+                icon: "success",
+                title: `Producto agregado al carrito.`,
+                confirmButtonColor: "#3085d6",
+            });
         }
     });
 });
-
-function carrito() {
-    const productos = JSON.parse(localStorage.getItem("Cart")) || [];
-    const saldo = document.querySelector("#total-pagar");
-
-    if (productos.length === 0) {
-        saldo.textContent = "$ 0.00";
-        return;
-    }
-
-    const total_pago = productos.reduce((total, producto) => total + parseFloat(producto.Price), 0);
-    saldo.textContent = `$ ${total_pago.toFixed(2)}`;
-}
 
 carrito();
 });

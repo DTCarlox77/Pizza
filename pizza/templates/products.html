@@ -11,54 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body style="margin-bottom: 5%;">
-
-    {% if toppings %}
-        <div class="buy-pizza" id="toppings-select" style="display: none">
-            <div class="order-menu">
-                <span class="options">
-                    <h1>Selección de coberturas</h1>
-                </span>
-
-                <label for="toppins" id="t1">Ingresa la primer cobertura</label>
-                <select name="" id="toppin1">
-                    <option value="Ninguna">Ninguna</option>
-                    {% for topping in toppings %}
-                    <option value="{{ topping }}">{{ topping }}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="toppins" id="t2" style="display: none;">Ingresa la segunda cobertura</label>
-                <select name="" id="toppin2" style="display: none;">
-                    <option value="Ninguna">Ninguna</option>
-                    {% for topping in toppings %}
-                    <option value="{{ topping }}">{{ topping }}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="toppins" id="t3" style="display: none;">Ingresa la tercera cobertura</label>
-                <select name="" id="toppin3" style="display: none;">
-                    <option value="Ninguna">Ninguna</option>
-                    {% for topping in toppings %}
-                    <option value="{{ topping }}">{{ topping }}</option>
-                    {% endfor %}
-                </select>
-
-                <label for="toppins" id="t4" style="display: none;">Ingresa la cuarta cobertura</label>
-                <select name="" id="toppin4" style="display: none;">
-                    <option value="Ninguna">Ninguna</option>
-                    {% for topping in toppings %}
-                    <option value="{{ topping }}">{{ topping }}</option>
-                    {% endfor %}
-                </select>
-
-                <span class="buy-options">
-                    <button class="agregar-carrito" id="comprar-pizza">Agregar al carrito</button>
-                    <button class="cancelar-compra" id="cancelar-pizza">Cancelar</button>
-                </span>
-            </div>
-        </div>
-    {% endif %}
-
     <nav class="full-screen">
 
         <div class="icon">
@@ -140,6 +92,54 @@
             </ul>
         </div>
     </div>
+
+    
+    {% if toppings %}
+        <div class="buy-pizza" id="toppings-select" style="display: none">
+            <div class="order-menu">
+                <span class="options">
+                    <h1>Selección de coberturas</h1>
+                </span>
+
+                <label for="toppins" id="t1">Ingresa la primer cobertura</label>
+                <select name="" id="toppin1">
+                    <option value="">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t2" style="display: none;">Ingresa la segunda cobertura</label>
+                <select name="" id="toppin2" style="display: none;">
+                    <option value="">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t3" style="display: none;">Ingresa la tercera cobertura</label>
+                <select name="" id="toppin3" style="display: none;">
+                    <option value="">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="toppins" id="t4" style="display: none;">Ingresa la cuarta cobertura</label>
+                <select name="" id="toppin4" style="display: none;">
+                    <option value="">Ninguna</option>
+                    {% for topping in toppings %}
+                    <option value="{{ topping }}">{{ topping }}</option>
+                    {% endfor %}
+                </select>
+
+                <span class="buy-options">
+                    <button class="agregar-carrito" id="comprar-pizza">Agregar al carrito</button>
+                    <button class="cancelar-compra" id="cancelar-pizza">Cancelar</button>
+                </span>
+            </div>
+        </div>
+    {% endif %}
 
     <section class="image">
         <img src="{% static 'images/pizza.png' %}" alt="">
