@@ -173,7 +173,7 @@ order_button.forEach(button => {
                     }); 
                 }
 
-                else if (Toppings == "Pizza con triple cobertura" && Topping1.value && Topping2.value && Topping3.value && Topping4.value) {
+                else if (Toppings == "Pizza especial" && Topping1.value && Topping2.value && Topping3.value && Topping4.value) {
                     current_cart.push({
                         "index": index,
                         "Tipo": Tipo,
