@@ -14,7 +14,7 @@ El proceso de registro solicita información básica, como nombre de usuario, no
 
 ## Video tutorial
 
-   **Youtube**: "Soon"
+   **Youtube**: https://youtu.be/CGeBdx8SlVU?si=QAAC-ijRR5lQdjAb
 
 ## Estructura de Archivos de la Aplicación
 
